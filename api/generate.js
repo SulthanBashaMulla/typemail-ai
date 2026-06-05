@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { recipient, tone, purpose, senderName } = req.body;
+  const { recipient, tone, purpose, senderName, paragraphs } = req.body;
 
   if (!purpose || !senderName) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -39,6 +39,7 @@ export default async function handler(req, res) {
 - Tone: ${tone}
 - Purpose: ${purpose}
 - Sender name: ${senderName}
+- Email length: exactly ${paragraphs} paragraph(s) in the body (excluding greeting and sign-off)
 
 Respond ONLY in this exact JSON format with no markdown, no extra text:
 {
