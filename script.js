@@ -142,20 +142,6 @@ function sendViaGmail() {
 
   const subject = encodeURIComponent(selectedSubject);
   const body = encodeURIComponent(generatedEmail);
-  
-  // Try Gmail app deep link first (works on mobile)
-  const gmailAppUrl = `googlegmail://co?subject=${subject}&body=${body}`;
-  const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&su=${subject}&body=${body}`;
 
-  // Try app link first, fall back to web
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
-  
-  iframe.src = gmailAppUrl;
-  
-  setTimeout(() => {
-    document.body.removeChild(iframe);
-    window.open(gmailWebUrl, '_blank');
-  }, 1500);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
