@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TypeMail AI — Relationship-Aware Email Writer</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
@@ -13,8 +13,6 @@
   <div class="glow glow-2"></div>
 
   <div class="app">
-
-    <!-- Header -->
     <header>
       <div class="logo-wrap">
         <span class="logo-icon">✦</span>
@@ -23,65 +21,64 @@
       <p class="tagline">Relationship-Aware Email Intelligence</p>
     </header>
 
-    <!-- Step 1: Recipient -->
-    <section class="section">
-      <div class="section-label"><span class="step">01</span> Recipient</div>
+    <!-- Recipient -->
+    <div class="card">
+      <div class="card-label"><span class="step-num">1</span> Who are you writing to?</div>
       <div class="chip-grid" id="recipientGroup">
-        <button class="chip active" data-value="professor">👨‍🏫<span>Professor</span></button>
-        <button class="chip" data-value="recruiter">💼<span>Recruiter</span></button>
-        <button class="chip" data-value="client">🤝<span>Client</span></button>
-        <button class="chip" data-value="manager">👔<span>Manager</span></button>
-        <button class="chip" data-value="friend">😊<span>Friend</span></button>
-        <button class="chip" data-value="investor">💰<span>Investor</span></button>
+        <button class="chip active" data-value="professor">👨‍🏫 Professor</button>
+        <button class="chip" data-value="recruiter">💼 Recruiter</button>
+        <button class="chip" data-value="client">🤝 Client</button>
+        <button class="chip" data-value="manager">👔 Manager</button>
+        <button class="chip" data-value="friend">😊 Friend</button>
+        <button class="chip" data-value="investor">💰 Investor</button>
       </div>
-    </section>
+    </div>
 
-    <!-- Step 2: Tone -->
-    <section class="section">
-      <div class="section-label"><span class="step">02</span> Tone</div>
+    <!-- Tone -->
+    <div class="card">
+      <div class="card-label"><span class="step-num">2</span> Tone</div>
       <div class="chip-grid" id="toneGroup">
-        <button class="chip active" data-value="formal">🎩<span>Formal</span></button>
-        <button class="chip" data-value="friendly">😊<span>Friendly</span></button>
-        <button class="chip" data-value="assertive">💪<span>Assertive</span></button>
-        <button class="chip" data-value="apologetic">🙏<span>Apologetic</span></button>
-        <button class="chip" data-value="grateful">🙌<span>Grateful</span></button>
+        <button class="chip active" data-value="formal">🎩 Formal</button>
+        <button class="chip" data-value="friendly">😊 Friendly</button>
+        <button class="chip" data-value="assertive">💪 Assertive</button>
+        <button class="chip" data-value="apologetic">🙏 Apologetic</button>
+        <button class="chip" data-value="grateful">🙌 Grateful</button>
       </div>
-    </section>
+    </div>
 
-    <!-- Step 3: Purpose -->
-    <section class="section">
-      <div class="section-label"><span class="step">03</span> What do you want to say?</div>
+    <!-- Purpose -->
+    <div class="card">
+      <div class="card-label"><span class="step-num">3</span> What do you want to say?</div>
       <textarea id="purpose" placeholder="e.g. Ask my professor for a deadline extension because I was sick..."></textarea>
-    </section>
+    </div>
 
-    <!-- Step 4: Name -->
-    <section class="section">
-      <div class="section-label"><span class="step">04</span> Your Name</div>
-      <input type="text" id="senderName" placeholder="e.g. Sulthan Basha" />
-    </section>
+    <!-- Name -->
+    <div class="card">
+      <div class="card-label"><span class="step-num">4</span> Your Name</div>
+      <input type="text" id="senderName" placeholder="e.g. Sulthan Basha"/>
+    </div>
 
-    <!-- Generate Button -->
     <button id="generateBtn" onclick="generateEmail()">
-      <span class="btn-icon">✦</span>
-      <span class="btn-text">Compose with AI</span>
+      <span>✦</span>
+      <span id="btnText">Compose with AI</span>
     </button>
 
     <!-- Loading -->
     <div class="loading hidden" id="loading">
-      <div class="dots">
-        <span></span><span></span><span></span>
-      </div>
+      <div class="dots"><span></span><span></span><span></span></div>
       <p>Crafting your perfect email...</p>
     </div>
 
     <!-- Output -->
     <div class="output hidden" id="outputCard">
 
+      <div class="divider-label">Your Email</div>
+
       <!-- Likelihood -->
-      <div class="likelihood-wrap">
-        <div class="likelihood-info">
-          <span class="likelihood-title">Response Probability</span>
-          <span class="likelihood-value" id="likelihoodPercent">0%</span>
+      <div class="likelihood-card">
+        <div class="likelihood-row">
+          <span class="likelihood-label">Response Probability</span>
+          <span class="likelihood-number" id="likelihoodPercent">0%</span>
         </div>
         <div class="bar-track">
           <div class="bar-fill" id="likelihoodBar"></div>
@@ -89,39 +86,42 @@
       </div>
 
       <!-- Subject Lines -->
-      <div class="out-section">
+      <div class="subject-card">
         <div class="out-label">Choose a Subject Line</div>
         <div id="subjectLines" class="subject-list"></div>
       </div>
 
       <!-- Email Body -->
-      <div class="out-section">
-        <div class="out-label-row">
-          <span class="out-label">Generated Email</span>
-          <button class="icon-btn" onclick="copyEmail()" id="copyBtn">📋 Copy</button>
+      <div class="email-card">
+        <div class="email-card-header">
+          <span class="out-label" style="margin-bottom:0">Generated Email</span>
+          <button class="copy-btn" onclick="copyEmail()" id="copyBtn">📋 Copy</button>
         </div>
-        <div id="emailOutput" class="email-box"></div>
+        <div id="emailOutput" class="email-body"></div>
       </div>
 
       <!-- Follow Up -->
-      <div class="out-section">
+      <div class="followup-card">
         <div class="out-label">Follow-up Suggestion</div>
-        <div id="followUp" class="followup-box"></div>
+        <div id="followUp" class="followup-text"></div>
       </div>
 
-      <!-- Send via Gmail -->
-      <button class="gmail-btn" id="gmailBtn" onclick="sendViaGmail()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" stroke="white" stroke-width="1.5"/>
-          <path d="M2 6l10 7 10-7" stroke="white" stroke-width="1.5"/>
-        </svg>
-        Send via Gmail
-      </button>
+      <!-- Gmail -->
+      <div class="gmail-card">
+        <div class="out-label" style="margin-bottom:0">Send Email</div>
+        <p class="gmail-hint">Opens Gmail with your email pre-composed. Just add the recipient's address.</p>
+        <button class="gmail-btn" onclick="sendViaGmail()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 6l10 7 10-7" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Open in Gmail
+        </button>
+      </div>
 
     </div>
 
     <footer>✦ Built with GitHub Copilot & Microsoft AI</footer>
-
   </div>
 
   <script src="script.js"></script>
