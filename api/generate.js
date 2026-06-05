@@ -34,19 +34,29 @@ export default async function handler(req, res) {
           },
           {
             role: 'user',
-            content: `Write a professional email with these details:
+            content: `You are an expert email writer. Always respond with valid JSON only, no extra text.
+
+Write a professional email with these details:
 - Recipient type: ${recipient}
 - Tone: ${tone}
 - Purpose: ${purpose}
 - Sender name: ${senderName}
-- Email length: exactly ${paragraphs} paragraph(s) in the body (excluding greeting and sign-off)
+- Email length: exactly ${paragraphs} paragraph(s) in the body
 
-Respond ONLY in this exact JSON format with no markdown, no extra text:
+IMPORTANT FORMATTING RULES:
+1. Each paragraph must be separated by a blank line (\\n\\n)
+2. Start with greeting on its own line: "Dear [Recipient],"
+3. Then a blank line before the first paragraph
+4. Each body paragraph separated by blank line
+5. Then closing line on its own: "Warm regards," or "Sincerely," based on tone
+6. Then sender name on next line: "${senderName}"
+
+Respond ONLY in this exact JSON format with no markdown:
 {
   "subjectLines": ["subject 1", "subject 2", "subject 3"],
-  "email": "complete email body here",
+  "email": "Dear [Recipient],\\n\\n[paragraph 1]\\n\\n[paragraph 2]\\n\\nWarm regards,\\n${senderName}",
   "responseLikelihood": 85,
-  "followUp": "follow up message suggestion here"
+  "followUp": "follow up suggestion here"
 }`
           }
         ]
