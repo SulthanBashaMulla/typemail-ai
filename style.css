@@ -375,3 +375,44 @@ footer {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   }
+.para-hint {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.chip.active .para-hint {
+  color: rgba(201,168,76,0.6);
+}
+
+.subject-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.subject-copy-btn {
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  color: var(--gold);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.subject-item.selected .subject-copy-btn {
+  opacity: 1;
+}
+
+.subject-copy-btn:hover {
+  background: rgba(201,168,76,0.2);
+}
