@@ -1,8 +1,10 @@
 let selectedRecipient = 'professor';
 let selectedTone = 'formal';
+let selectedLength = '2';
 let selectedSubject = '';
 let generatedEmail = '';
 
+// Recipient chips
 document.querySelectorAll('#recipientGroup .chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('#recipientGroup .chip').forEach(c => c.classList.remove('active'));
@@ -11,11 +13,21 @@ document.querySelectorAll('#recipientGroup .chip').forEach(chip => {
   });
 });
 
+// Tone chips
 document.querySelectorAll('#toneGroup .chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('#toneGroup .chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     selectedTone = chip.dataset.value;
+  });
+});
+
+// Length chips
+document.querySelectorAll('#lengthGroup .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#lengthGroup .chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    selectedLength = chip.dataset.value;
   });
 });
 
@@ -39,7 +51,13 @@ async function generateEmail() {
     const response = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ recipient: selectedRecipient, tone: selectedTone, purpose, senderName })
+      body: JSON.stringify({
+        recipient: selectedRecipient,
+        tone: selectedTone,
+        purpose,
+        senderName,
+        paragraphs: selectedLength
+      })
     });
 
     const data = await response.json();
@@ -47,12 +65,12 @@ async function generateEmail() {
 
     // Likelihood
     const likelihood = data.responseLikelihood || 75;
+    document.getElementById('likelihoodPercent').textContent = likelihood + '%';
     setTimeout(() => {
       document.getElementById('likelihoodBar').style.width = likelihood + '%';
     }, 100);
-    document.getElementById('likelihoodPercent').textContent = likelihood + '%';
 
-    // Subject lines — first one selected by default
+    // Subject lines with copy button
     selectedSubject = '';
     const subjectContainer = document.getElementById('subjectLines');
     subjectContainer.innerHTML = '';
@@ -60,9 +78,17 @@ async function generateEmail() {
     (data.subjectLines || []).forEach((subject, i) => {
       const div = document.createElement('div');
       div.className = 'subject-item' + (i === 0 ? ' selected' : '');
-      div.innerHTML = `<span>${subject}</span><span class="subject-check">✦</span>`;
 
-      div.addEventListener('click', () => {
+      div.innerHTML = `
+        <div class="subject-item-row">
+          <span class="subject-text">${subject}</span>
+          <span class="subject-check">✦</span>
+          <button class="subject-copy-btn" onclick="copySubject(event, '${subject.replace(/'/g, "\\'")}')">Copy</button>
+        </div>
+      `;
+
+      div.addEventListener('click', (e) => {
+        if (e.target.classList.contains('subject-copy-btn')) return;
         document.querySelectorAll('.subject-item').forEach(s => s.classList.remove('selected'));
         div.classList.add('selected');
         selectedSubject = subject;
@@ -72,7 +98,7 @@ async function generateEmail() {
       if (i === 0) selectedSubject = subject;
     });
 
-    // Email
+    // Email body
     generatedEmail = data.email || '';
     document.getElementById('emailOutput').textContent = generatedEmail;
 
@@ -92,6 +118,15 @@ async function generateEmail() {
   btnText.textContent = 'Compose with AI';
 }
 
+function copySubject(event, subject) {
+  event.stopPropagation();
+  navigator.clipboard.writeText(subject).then(() => {
+    const btn = event.target;
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
 function copyEmail() {
   if (!generatedEmail) return;
   navigator.clipboard.writeText(generatedEmail).then(() => {
@@ -108,6 +143,5 @@ function sendViaGmail() {
   const subject = encodeURIComponent(selectedSubject);
   const body = encodeURIComponent(generatedEmail);
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${subject}&body=${body}`;
-
   window.open(gmailUrl, '_blank');
 }
