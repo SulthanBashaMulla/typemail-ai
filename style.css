@@ -291,6 +291,7 @@ textarea:focus, input[type="text"]:focus { outline: none; }
   line-height: 1.9;
   color: #b8b4c8;
   white-space: pre-wrap;
+  word-break: break-word;
   font-weight: 300;
   border-top: 1px solid var(--border);
   padding-top: 16px;
