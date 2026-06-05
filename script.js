@@ -1,5 +1,7 @@
 let selectedRecipient = 'professor';
 let selectedTone = 'formal';
+let selectedSubject = '';
+let generatedEmail = '';
 
 // Chip selection
 document.querySelectorAll('#recipientGroup .chip').forEach(chip => {
@@ -27,7 +29,7 @@ async function generateEmail() {
 
   const btn = document.getElementById('generateBtn');
   btn.disabled = true;
-  btn.textContent = '⏳ Writing...';
+  btn.querySelector('.btn-text').textContent = 'Composing...';
 
   document.getElementById('outputCard').classList.add('hidden');
   document.getElementById('loading').classList.remove('hidden');
@@ -36,36 +38,40 @@ async function generateEmail() {
     const response = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        recipient: selectedRecipient,
-        tone: selectedTone,
-        purpose,
-        senderName
-      })
+      body: JSON.stringify({ recipient: selectedRecipient, tone: selectedTone, purpose, senderName })
     });
 
     const data = await response.json();
-
     if (data.error) throw new Error(data.error);
 
-    // Response likelihood bar
+    // Likelihood
     const likelihood = data.responseLikelihood || 75;
     document.getElementById('likelihoodBar').style.width = likelihood + '%';
     document.getElementById('likelihoodPercent').textContent = likelihood + '%';
 
     // Subject lines
+    selectedSubject = '';
     const subjectContainer = document.getElementById('subjectLines');
     subjectContainer.innerHTML = '';
-    (data.subjectLines || []).forEach(subject => {
+    (data.subjectLines || []).forEach((subject, i) => {
       const div = document.createElement('div');
       div.className = 'subject-item';
-      div.textContent = subject;
-      div.onclick = () => navigator.clipboard.writeText(subject);
+      div.innerHTML = `<span>${subject}</span><span class="check">✦</span>`;
+      div.onclick = () => {
+        document.querySelectorAll('.subject-item').forEach(s => s.classList.remove('selected'));
+        div.classList.add('selected');
+        selectedSubject = subject;
+      };
+      if (i === 0) {
+        div.classList.add('selected');
+        selectedSubject = subject;
+      }
       subjectContainer.appendChild(div);
     });
 
-    // Email body
-    document.getElementById('emailOutput').textContent = data.email || '';
+    // Email
+    generatedEmail = data.email || '';
+    document.getElementById('emailOutput').textContent = generatedEmail;
 
     // Follow up
     document.getElementById('followUp').textContent = data.followUp || '';
@@ -76,18 +82,26 @@ async function generateEmail() {
   } catch (error) {
     document.getElementById('loading').classList.add('hidden');
     alert('Error: ' + error.message);
-    console.error(error);
   }
 
   btn.disabled = false;
-  btn.textContent = '✨ Generate Email';
+  btn.querySelector('.btn-text').textContent = 'Compose with AI';
 }
 
 function copyEmail() {
-  const text = document.getElementById('emailOutput').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = '✅ Copied!';
+  navigator.clipboard.writeText(generatedEmail).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied';
     setTimeout(() => btn.textContent = '📋 Copy', 2000);
   });
+}
+
+function sendViaGmail() {
+  if (!generatedEmail) { alert('Generate an email first!'); return; }
+
+  const subject = encodeURIComponent(selectedSubject || 'Hello');
+  const body = encodeURIComponent(generatedEmail);
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${subject}&body=${body}`;
+
+  window.open(gmailUrl, '_blank');
 }
