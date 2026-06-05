@@ -2,115 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title>TypeMail AI</title>
-        <link rel="stylesheet" href="style.css" />
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-          </head>
-          <body>
-            <div class="app">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TypeMail AI — Relationship-Aware Email Writer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
 
-                <!-- Header -->
-                    <header>
-                          <div class="logo">✉️ TypeMail AI</div>
-                                <p class="tagline">Relationship-Aware AI Email Writer</p>
-                                    </header>
+  <div class="app">
 
-                                        <!-- Main Form -->
-                                            <main>
-                                                  <div class="card">
+    <!-- Header -->
+    <header>
+      <div class="logo-wrap">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">TypeMail<span class="logo-ai"> AI</span></span>
+      </div>
+      <p class="tagline">Relationship-Aware Email Intelligence</p>
+    </header>
 
-                                                          <!-- Recipient Type -->
-                                                                  <div class="form-group">
-                                                                            <label>Who are you writing to?</label>
-                                                                                      <div class="chip-group" id="recipientGroup">
-                                                                                                  <button class="chip active" data-value="professor">👨‍🏫 Professor</button>
-                                                                                                              <button class="chip" data-value="recruiter">💼 Recruiter</button>
-                                                                                                                          <button class="chip" data-value="client">🤝 Client</button>
-                                                                                                                                      <button class="chip" data-value="manager">👔 Manager</button>
-                                                                                                                                                  <button class="chip" data-value="friend">😊 Friend</button>
-                                                                                                                                                              <button class="chip" data-value="investor">💰 Investor</button>
-                                                                                                                                                                        </div>
-                                                                                                                                                                                </div>
+    <!-- Step 1: Recipient -->
+    <section class="section">
+      <div class="section-label"><span class="step">01</span> Recipient</div>
+      <div class="chip-grid" id="recipientGroup">
+        <button class="chip active" data-value="professor">👨‍🏫<span>Professor</span></button>
+        <button class="chip" data-value="recruiter">💼<span>Recruiter</span></button>
+        <button class="chip" data-value="client">🤝<span>Client</span></button>
+        <button class="chip" data-value="manager">👔<span>Manager</span></button>
+        <button class="chip" data-value="friend">😊<span>Friend</span></button>
+        <button class="chip" data-value="investor">💰<span>Investor</span></button>
+      </div>
+    </section>
 
-                                                                                                                                                                                        <!-- Tone -->
-                                                                                                                                                                                                <div class="form-group">
-                                                                                                                                                                                                          <label>Tone</label>
-                                                                                                                                                                                                                    <div class="chip-group" id="toneGroup">
-                                                                                                                                                                                                                                <button class="chip active" data-value="formal">🎩 Formal</button>
-                                                                                                                                                                                                                                            <button class="chip" data-value="friendly">😊 Friendly</button>
-                                                                                                                                                                                                                                                        <button class="chip" data-value="assertive">💪 Assertive</button>
-                                                                                                                                                                                                                                                                    <button class="chip" data-value="apologetic">🙏 Apologetic</button>
-                                                                                                                                                                                                                                                                                <button class="chip" data-value="grateful">🙌 Grateful</button>
-                                                                                                                                                                                                                                                                                          </div>
-                                                                                                                                                                                                                                                                                                  </div>
+    <!-- Step 2: Tone -->
+    <section class="section">
+      <div class="section-label"><span class="step">02</span> Tone</div>
+      <div class="chip-grid" id="toneGroup">
+        <button class="chip active" data-value="formal">🎩<span>Formal</span></button>
+        <button class="chip" data-value="friendly">😊<span>Friendly</span></button>
+        <button class="chip" data-value="assertive">💪<span>Assertive</span></button>
+        <button class="chip" data-value="apologetic">🙏<span>Apologetic</span></button>
+        <button class="chip" data-value="grateful">🙌<span>Grateful</span></button>
+      </div>
+    </section>
 
-                                                                                                                                                                                                                                                                                                          <!-- Purpose -->
-                                                                                                                                                                                                                                                                                                                  <div class="form-group">
-                                                                                                                                                                                                                                                                                                                            <label>What do you want to say?</label>
-                                                                                                                                                                                                                                                                                                                                      <textarea id="purpose" placeholder="e.g. Ask my professor for an assignment deadline extension because I was sick..."></textarea>
-                                                                                                                                                                                                                                                                                                                                              </div>
+    <!-- Step 3: Purpose -->
+    <section class="section">
+      <div class="section-label"><span class="step">03</span> What do you want to say?</div>
+      <textarea id="purpose" placeholder="e.g. Ask my professor for a deadline extension because I was sick..."></textarea>
+    </section>
 
-                                                                                                                                                                                                                                                                                                                                                      <!-- Your Name -->
-                                                                                                                                                                                                                                                                                                                                                              <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                        <label>Your Name</label>
-                                                                                                                                                                                                                                                                                                                                                                                  <input type="text" id="senderName" placeholder="e.g. Sulthan Basha" />
-                                                                                                                                                                                                                                                                                                                                                                                          </div>
+    <!-- Step 4: Name -->
+    <section class="section">
+      <div class="section-label"><span class="step">04</span> Your Name</div>
+      <input type="text" id="senderName" placeholder="e.g. Sulthan Basha" />
+    </section>
 
-                                                                                                                                                                                                                                                                                                                                                                                                  <button id="generateBtn" onclick="generateEmail()">
-                                                                                                                                                                                                                                                                                                                                                                                                            ✨ Generate Email
-                                                                                                                                                                                                                                                                                                                                                                                                                    </button>
+    <!-- Generate Button -->
+    <button id="generateBtn" onclick="generateEmail()">
+      <span class="btn-icon">✦</span>
+      <span class="btn-text">Compose with AI</span>
+    </button>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
+    <!-- Loading -->
+    <div class="loading hidden" id="loading">
+      <div class="dots">
+        <span></span><span></span><span></span>
+      </div>
+      <p>Crafting your perfect email...</p>
+    </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- Output Section -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                      <div class="output-card hidden" id="outputCard">
+    <!-- Output -->
+    <div class="output hidden" id="outputCard">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                              <!-- Response Likelihood -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div class="likelihood-bar">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span class="likelihood-label">Response Likelihood</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div class="bar-track">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div class="bar-fill" id="likelihoodBar"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <span class="likelihood-percent" id="likelihoodPercent">0%</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
+      <!-- Likelihood -->
+      <div class="likelihood-wrap">
+        <div class="likelihood-info">
+          <span class="likelihood-title">Response Probability</span>
+          <span class="likelihood-value" id="likelihoodPercent">0%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" id="likelihoodBar"></div>
+        </div>
+      </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <!-- Subject Lines -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div class="section">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <h3>📌 Suggested Subject Lines</h3>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div id="subjectLines" class="subject-list"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
+      <!-- Subject Lines -->
+      <div class="out-section">
+        <div class="out-label">Choose a Subject Line</div>
+        <div id="subjectLines" class="subject-list"></div>
+      </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Generated Email -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <div class="section">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="section-header">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <h3>📧 Generated Email</h3>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="copy-btn" onclick="copyEmail()">📋 Copy</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div id="emailOutput" class="email-box"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+      <!-- Email Body -->
+      <div class="out-section">
+        <div class="out-label-row">
+          <span class="out-label">Generated Email</span>
+          <button class="icon-btn" onclick="copyEmail()" id="copyBtn">📋 Copy</button>
+        </div>
+        <div id="emailOutput" class="email-box"></div>
+      </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Follow-up -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="section">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <h3>🔄 Follow-up Suggestion</h3>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div id="followUp" class="followup-box"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+      <!-- Follow Up -->
+      <div class="out-section">
+        <div class="out-label">Follow-up Suggestion</div>
+        <div id="followUp" class="followup-box"></div>
+      </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
+      <!-- Send via Gmail -->
+      <button class="gmail-btn" id="gmailBtn" onclick="sendViaGmail()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" stroke="white" stroke-width="1.5"/>
+          <path d="M2 6l10 7 10-7" stroke="white" stroke-width="1.5"/>
+        </svg>
+        Send via Gmail
+      </button>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Loading -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div class="loading hidden" id="loading">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div class="spinner"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <p>TypeMail AI is writing your email...</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+    </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </main>
+    <footer>✦ Built with GitHub Copilot & Microsoft AI</footer>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <footer>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <p>Built with GitHub Copilot & Microsoft AI ⚡</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </footer>
+  </div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <script src="script.js"></script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </html>
+  <script src="script.js"></script>
+</body>
+</html>
